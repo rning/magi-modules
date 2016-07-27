@@ -67,12 +67,13 @@ class Building(DispatchAgent): # difference between DispatchAgent and NonBlockin
             self.pAZA = self.paramList[index+5][len("pAZA:"):]
             self.pELA = self.paramList[index+6][len("pELA:"):] 
             self.lightDraw = self.paramList[index+7][len("lightDraw:"):]
-            self.outlets = self.paramList[index+8][len("outlets:"):]
-            self.applianceDraw = self.paramList[index+9][len("applianceDraw:"):]
-            self.tempAC = self.paramList[index+10][len("tempAC:"):]
-            self.timeAC = self.paramList[index+11][len("timeAC:"):] # list: [ day start, day end, time of day start, time of day end ]
-            self.thermalLeakCe = self.paramList[index+12][len("thermalLeak:"):]
-            self.thermalPower = self.paramList[index+13][len("thermalPower:"):]
+            self.baselineCe = self.paramList[index+8][len("baselineCe:"):]
+            self.outlets = self.paramList[index+9][len("outlets:"):]
+            self.applianceDraw = self.paramList[index+10][len("applianceDraw:"):]
+            self.tempAC = self.paramList[index+11][len("tempAC:"):]
+            self.timeAC = self.paramList[index+12][len("timeAC:"):] # list: [ day start, day end, time of day start, time of day end ]
+            self.thermalLeakCe = self.paramList[index+13][len("thermalLeak:"):]
+            self.thermalPower = self.paramList[index+14][len("thermalPower:"):]
             
     
     def newDay(self, msg, day):
