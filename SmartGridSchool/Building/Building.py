@@ -133,7 +133,7 @@ class Building(DispatchAgent): # difference between DispatchAgent and NonBlockin
 
         # Lights calculation
         self.activeWattage = 0  # % active wattage 0.0 - 1.0
-        self.baseLineCe = 0.15
+        self.baselineCe = 0.15
 
         # Outlets
         self.activeOutlets = 0
@@ -250,9 +250,9 @@ class Building(DispatchAgent): # difference between DispatchAgent and NonBlockin
             self.cons += self.activeOutlets * self.outletDraw
 
             # light use
-            base = round((10 - 10 * self.baseLineCe) * 10, 0)
+            base = round((10 - 10 * self.baselineCe) * 10, 0)
             print "Base: " + str(base)
-            #self.baseLineCe = round(self.baseLineCe * 100, 0)
+            #self.baselineCe = round(self.baselineCe * 100, 0)
 
             if self.LT < 475:
                 if self.LT % 10 == 0:
@@ -264,10 +264,10 @@ class Building(DispatchAgent): # difference between DispatchAgent and NonBlockin
                 if (self.LT - 795) % 15 == 0:
                     self.activeWattage = 1.0 / (0.1 * randint(1, base))
             else:
-                if (self.LT - 1020) % 20 == 0 and randint(0, 10) <= 10 * self.baseLineCe:
-                    self.activeWattage = (1.0 / randint(int(10 * (1 - 3 * self.baseLineCe)), base))
+                if (self.LT - 1020) % 20 == 0 and randint(0, 10) <= 10 * self.baselineCe:
+                    self.activeWattage = (1.0 / randint(int(10 * (1 - 3 * self.baselineCe)), base))
                 else:
-                    self.activeWattage = self.baseLineCe
+                    self.activeWattage = self.baselineCe
 
             self.cons += self.activeWattage * self.lightDraw
             print "Light Power Draw: " + str(self.activeWattage * self.lightDraw)
