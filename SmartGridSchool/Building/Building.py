@@ -22,7 +22,7 @@ class Building(DispatchAgent): # difference between DispatchAgent and NonBlockin
         DispatchAgent.__init__(self)
         
         #Default arguments for server and clientId:
-        self.server = 'localhost'
+        self.server = 'server'
         self.clientId = None
     
     # This code for parsing parameters.conf
