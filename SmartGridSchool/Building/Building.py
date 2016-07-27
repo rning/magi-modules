@@ -65,7 +65,8 @@ class Building(DispatchAgent): # difference between DispatchAgent and NonBlockin
             self.applianceDraw = self.paramList[index+9][len("applianceDraw:"):]
             self.tempAC = self.paramList[index+10][len("tempAC:"):]
             self.timeAC = self.paramList[index+11][len("timeAC:"):] # list: [ day start, day end, time of day start, time of day end ]
-            self.thermalLeak = self.paramList[index+12][len("thermalLeak:"):] 
+            self.thermalLeak = self.paramList[index+12][len("thermalLeak:"):]
+            self.thermalPower = self.paramList[index+13][len("thermalPower:"):]
     
     # From simple_client > client.py
     def setClientid(self):
