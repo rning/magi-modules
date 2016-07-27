@@ -44,10 +44,14 @@ class Server(SharedServer):
     
     # Dummy response handler 
     def responseHandler(self,recvdata):
-        log.info("Got info %s" %(rcvdata)) 
+        log.info("Got info %s" %(recvdata)) 
         sendstring = "Thank you" 	
         
         return sendstring  
+    
+    
+    #def sendMSG():
+    #    self.commServer.sendOneData()
 
 def getAgent(**kwargs):
     agent = Server()
