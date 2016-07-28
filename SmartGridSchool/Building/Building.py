@@ -78,12 +78,9 @@ class Building(DispatchAgent): # difference between DispatchAgent and NonBlockin
         # constants and parsed values
         self.day = day
         self.LT = 0
-
         self.OLI = 23.44
         self.LAT = 33.77984
-
         self.panelEff = 0.21
-
         self.preDawn = True
         self.dusk = False
 
