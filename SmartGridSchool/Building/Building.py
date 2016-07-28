@@ -74,7 +74,7 @@ class Building(DispatchAgent): # difference between DispatchAgent and NonBlockin
             self.thermalLeakCe = self.paramList[index+13][len("thermalLeak:"):]
             self.thermalPower = self.paramList[index+14][len("thermalPower:"):]
     
-    def iterateDay(self):
+    def iterateDay(self, msg):
         # run newDay to generate day-unique values
         self.newDay(self.day)
         
