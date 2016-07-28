@@ -48,7 +48,7 @@ eventstreams:
             agent: building_agent
             method: iterateDay
             args: {}
-            trigger iterateDayDone
+            trigger: iterateDayDone
         
         -   type: trigger
             triggers: [ {event: iterateDayDone} ]
