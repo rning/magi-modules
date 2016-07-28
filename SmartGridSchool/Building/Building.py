@@ -1,5 +1,4 @@
-# TO DO:
-# -Implement return time function in Server.py; this will be called by each building at the start of each minute
+# NOTE: building data files must have "Data" subdirectory in the AAL's directory
 
 import logging
 import math
@@ -74,7 +73,15 @@ class Building(DispatchAgent): # difference between DispatchAgent and NonBlockin
             self.timeAC = self.paramList[index+12][len("timeAC:"):] # list: [ day start, day end, time of day start, time of day end ]
             self.thermalLeakCe = self.paramList[index+13][len("thermalLeak:"):]
             self.thermalPower = self.paramList[index+14][len("thermalPower:"):]
-            
+    
+    def iterateDay(self, msg)
+        # run newDay to generate day-unique values
+        newDay(self.day)
+        
+        dataPath = "/users/rning/magi-modules/SmartGridSchool/Data/" + self.hostname + "data.txt"
+        with open(dataPath, "a") as dataFile:
+            for i in range(0, 1440):
+                print >>dataFile, "%d,%d" % (generation(), consumption())
     
     def newDay(self, msg, day):
         # constants and parsed values
