@@ -36,6 +36,17 @@ eventstreams:
     building_stream: 
         -   type: event
             agent: building_agent
+            method: setConfiguration
+            args: {}
+            trigger: configDone
+        
+        -   type: trigger
+            triggers: [ {event: configDone} ]
+        
+        
+        
+        -   type: event
+            agent: building_agent
             method: startclient
             args: {}
             trigger: clientStarted
