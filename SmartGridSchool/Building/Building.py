@@ -160,7 +160,7 @@ class Building(DispatchAgent): # difference between DispatchAgent and NonBlockin
         # a conservative baseline estimate
         self.outletDraw = 75
         
-        return true
+        return True
 
     def generation(self):
         
