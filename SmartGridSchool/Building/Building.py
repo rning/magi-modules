@@ -140,7 +140,7 @@ class Building(DispatchAgent): # difference between DispatchAgent and NonBlockin
         self.ran = self.maxT - self.minT
         self.ave = (self.maxT + self.minT) / 2
         
-        self.insideTemperature = self.tempAC + self.thermalLeakCe * 60 * (24 - self.timeAC[1] + self.timeAC[0]) * (self.ave - tempAC)
+        self.insideTemperature = self.tempAC + self.thermalLeakCe * 60 * (24 - self.timeAC[1] + self.timeAC[0]) * (self.ave - self.tempAC)
         self.outsideTemperature = 23
 
         # the amount of energy in Kw, the air conditioner can remove from the air per hour
