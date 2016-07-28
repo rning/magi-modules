@@ -1,7 +1,6 @@
 # TO DO:
 # -Implement return time function in Server.py; this will be called by each building at the start of each minute
 
-# commented out code: don't know if necessary/not yet implemented
 import logging
 import math
 #import scipy.io
@@ -217,15 +216,10 @@ class Building(DispatchAgent): # difference between DispatchAgent and NonBlockin
                 if self.insideTemperature - self.deltaT < self.tempAC:
                     self.cons += self.acPowerUse * ((self.insideTemperature - self.tempAC) / self.deltaT)
                     self.insideTemperature = self.tempAC
-                    #print "(Partial Temperature Change)"
                 else:
-                    #print "Temperature: " + str(self.insideTemperature)
                     self.insideTemperature -= self.deltaT
                     self.cons += self.acPowerUse
 
-                    #print "Changed Temperature: " + str(self.insideTemperature)
-
-        print "Local Time: " + str(self.LT)
         if self.LT > (5.0 / 24.0) * 1440.0 and self.LT < (21.0 / 24.0) * 1440.0:
             # Outlet use
             if self.LT < 475:
@@ -245,13 +239,10 @@ class Building(DispatchAgent): # difference between DispatchAgent and NonBlockin
                 else:
                     self.activeOutlets = 0
             self.activeOutlets = round(self.activeOutlets, 0)
-            print "Active Outlets: " + str(self.activeOutlets)
-            print "Outlet Consumption: " + str(self.activeOutlets * self.outletDraw)
             self.cons += self.activeOutlets * self.outletDraw
 
             # light use
             base = round((10 - 10 * self.baselineCe) * 10, 0)
-            print "Base: " + str(base)
             #self.baselineCe = round(self.baselineCe * 100, 0)
 
             if self.LT < 475:
@@ -270,8 +261,6 @@ class Building(DispatchAgent): # difference between DispatchAgent and NonBlockin
                     self.activeWattage = self.baselineCe
 
             self.cons += self.activeWattage * self.lightDraw
-            print "Light Power Draw: " + str(self.activeWattage * self.lightDraw)
-            print
         return self.cons
 
     
@@ -308,14 +297,6 @@ class Building(DispatchAgent): # difference between DispatchAgent and NonBlockin
         string = msgData['string']
         
         log.info("src and string: %s %s", src, string)
-    
-    # electricity generation 
-    #def generation(self, msg):
-        #
-  
-    # electricity consumption
-    #def consumption(self, msg):
-        #    
 
 # getAgent() method must be defined somewhere for all agents.
 # Magi daemon invokes method to get reference to agent. Uses reference to run and interact with agent instance.
