@@ -76,12 +76,12 @@ class Building(DispatchAgent): # difference between DispatchAgent and NonBlockin
     
     def iterateDay(self, msg):
         # run newDay to generate day-unique values
-        newDay(self.day)
+        self.newDay(self.day)
         
         dataPath = "/users/rning/magi-modules/SmartGridSchool/Data/" + self.hostname + "data.txt"
         with open(dataPath, "a") as dataFile:
             for i in range(0, 1440):
-                print >>dataFile, "%d,%d" % (generation(), consumption())
+                print >>dataFile, "%d,%d" % (self.generation(), self.consumption())
     
     def newDay(self, msg, day):
         # constants and parsed values
