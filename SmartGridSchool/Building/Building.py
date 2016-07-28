@@ -59,20 +59,35 @@ class Building(DispatchAgent): # difference between DispatchAgent and NonBlockin
         # UNTIL SERVER PARAMS ARE IMPLEMENTED:
         if self.hostname != "server":
             index = self.paramList.index(self.hostname)
-            self.area = self.paramList[index+1][len("area:"):] 
-            self.volume = self.paramList[index+2][len("volume:"):] 
-            self.panelArea = self.paramList[index+3][len("panelArea:"):]
-            self.panelTracking = self.paramList[index+4][len("panelTracking:"):] # boolean: 0 or 1
-            self.pAZA = self.paramList[index+5][len("pAZA:"):]
-            self.pELA = self.paramList[index+6][len("pELA:"):] 
-            self.lightDraw = self.paramList[index+7][len("lightDraw:"):]
-            self.baselineCe = self.paramList[index+8][len("baselineCe:"):]
-            self.outlets = self.paramList[index+9][len("outlets:"):]
-            self.applianceDraw = self.paramList[index+10][len("applianceDraw:"):]
-            self.tempAC = self.paramList[index+11][len("tempAC:"):]
-            self.timeAC = self.paramList[index+12][len("timeAC:"):] # list: [ day start, day end, time of day start, time of day end ]
-            self.thermalLeakCe = self.paramList[index+13][len("thermalLeak:"):]
-            self.thermalPower = self.paramList[index+14][len("thermalPower:"):]
+            self.area = float(self.paramList[index+1][len("area:"):]) 
+            self.volume = float(self.paramList[index+2][len("volume:"):])
+            self.panelArea = float(self.paramList[index+3][len("panelArea:"):])
+            # set panelTracking to false as default, if true, then set
+            self.panelTracking = False
+            if self.paramList[index+4][len("panelTracking:"):] == "True":
+                self.panelTracking = True
+            self.pAZA = float(self.paramList[index+5][len("pAZA:"):])
+            self.pELA = float(self.paramList[index+6][len("pELA:"):])
+            self.lightDraw = float(self.paramList[index+7][len("lightDraw:"):])
+            self.baselineCe = float(self.paramList[index+8][len("baselineCe:"):])
+            self.outlets = float(self.paramList[index+9][len("outlets:"):])
+            self.applianceDraw = float(self.paramList[index+10][len("applianceDraw:"):])
+            self.tempAC = float(self.paramList[index+11][len("tempAC:"):])
+            self.timeAC = self.paramList[index+12][len("timeAC:"):]
+            # convert string from param file to list
+            self.timeAC = [] # list: [ day start, day end, time of day start, time of day end ]
+            ACList = self.paramList[index+12][len("timeAC:"):]
+            timeACIndex = 0
+            endIndex = 0
+            for letter inACList:
+                if letter == "," or letter == "[":
+                    endIndex = timeACIndex + 1
+                    while ACList[endIndex] != "," and ACList[endIndex] != "]":
+                        endIndex += 1
+                    self.timeAC.append(float(ACList[timeACIndex + 1: endIndex]))
+                    timeACIndex = endIndex
+            self.thermalLeakCe = float(self.paramList[index+13][len("thermalLeak:"):])
+            self.thermalPower = float(self.paramList[index+14][len("thermalPower:"):])
     
     def iterateDay(self, msg):
         # run newDay to generate day-unique values
