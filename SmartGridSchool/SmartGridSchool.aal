@@ -42,8 +42,7 @@ eventstreams:
         
         -   type: trigger
             triggers: [ {event: configDone} ]
-        
-        #event: newDay (needs to be run once at start of each day
+
         
         #event: iterateDay (run once to loop through all iterations and record data in file
         
