@@ -79,7 +79,7 @@ class Building(DispatchAgent): # difference between DispatchAgent and NonBlockin
             ACList = self.paramList[index+12][len("timeAC:"):]
             timeACIndex = 0
             endIndex = 0
-            for letter inACList:
+            for letter in ACList:
                 if letter == "," or letter == "[":
                     endIndex = timeACIndex + 1
                     while ACList[endIndex] != "," and ACList[endIndex] != "]":
