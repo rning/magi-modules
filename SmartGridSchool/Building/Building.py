@@ -30,6 +30,9 @@ class Building(DispatchAgent): # difference between DispatchAgent and NonBlockin
         self.server = 'server'
         self.port = 55343
         self.clientId = None
+        
+        # set the time (in minutes): 0 to 1440 (1339 inclusive)
+        self.LT = 0
     
     # This code for parsing parameters.conf
     def setConfiguration(self, msg, **kwargs):
@@ -97,6 +100,7 @@ class Building(DispatchAgent): # difference between DispatchAgent and NonBlockin
         with open(dataPath, "a") as dataFile:
             for i in range(0, 1440):
                 print >>dataFile, "%d,%d" % (self.generation(), self.consumption())
+                self.LT += 1
     
     def newDay(self, day):
         # constants and parsed values
