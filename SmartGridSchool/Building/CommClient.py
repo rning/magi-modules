@@ -18,6 +18,11 @@ TXTIMEOUT=1
 log = logging.getLogger(__name__)
 log.setLevel(logging.DEBUG)
 
+
+ch = logging.StreamHandler()
+log.addHandler(ch) 
+
+
 class ClientCommService:
     
     def __init__(self, clientId):
@@ -31,7 +36,7 @@ class ClientCommService:
         functionName = self.initCommClient.__name__ + str(self.clientId)
         helpers.exitlog(log, functionName, level=logging.INFO)
     
-    def initCommClient(self, address, replyHandler):
+    def initCommClient(self, address, port, replyHandler):
         functionName = self.initCommClient.__name__
         helpers.entrylog(log, functionName, level=logging.INFO)
         
@@ -44,7 +49,7 @@ class ClientCommService:
             log.info("Trying to connect to server, attempt #%d..." % (retries+1))
             try:
                 log.info("Trying to connect to server %s..." % (address))
-                self.sock.connect((address, PORT))
+                self.sock.connect((address, port))
                 self.connected = True
                 log.info("Connected to server")
             except socket.error as e:
@@ -54,10 +59,9 @@ class ClientCommService:
                 if retries == 10:
                     log.info("Failed to connect after ten retires...  %s" % repr(e))
                     return 
-
-        #data = json.dumps({'src': self.clientId})
-        #self.sock.send(data)
         
+        # Now that a connection is established with the server start the 
+        # server management thread so that client and asynchronously send and recv 
         self.active = True
         thread = Thread(name="ClientHandler for " + str(self.clientId), target=self.ClientHandler, args=(replyHandler,))
         thread.start()
@@ -71,36 +75,38 @@ class ClientCommService:
         log.info("Running %s"  % t.name)
 
         data = json.dumps({'src': self.clientId, 'text': 'hello server'})
-        self.sock.send(data) 
+        log.debug("sending string %s" %(data))
+        self.sock.sendall(data) 
         
+        # Waiting for the server hello 
         while self.active:
+            log.debug("%s: Wating for data from server..." % t.name )
             #blocks on recv, but may timeout
             try:
                 rxdata = self.sock.recv(BUFF)
+                self.processRecvData(rxdata)
                 log.debug("Data Received: %s" %(repr(rxdata)))
             except socket.timeout:
                 continue
-
-            try:
-                jdata = json.loads(rxdata.strip())
-            except:
-                log.info("ClientHandler could not parse JSON string: %s" % repr(rxdata))
-                self.stop() 
-                continue
-            
-            log.debug('Client RX jdata: %s'  %(repr(jdata)))
-            #replyHandler(jdata)
-            self.stop()
-
         #cleanup
-        self.sock.close()
         log.info("Leaving %s" % threading.currentThread().name)
     
+
+    def processRecvData(self,string):
+        if len(string) == 0:
+            log.info("Server closed connection. Exiting....")
+            self.stop()
+            return 
+        if len(string) > 0:
+          jdata = json.loads(string.strip())
+          log.debug("Data Received: %s" %(repr(jdata)))
+          return 
+
     def onesend(self,string):
-        data = json.dumps({'src': self.clientId, 'text': string})
-        log.debug('Sending data %s' %(data))
-        self.sock.send(data)
-        
+       # neoed to process what is received from the server 
+
+       str = "hi again" 
+       return str 
 
 
     def sendData(self, data):
@@ -111,9 +117,10 @@ class ClientCommService:
                 
     def stop(self):
         self.active = False
+        self.sock.close()
+        return 
 
 
 if __name__ == "__main__":
     client = ClientCommService(sys.argv[1])
-    client.initCommClient("127.0.0.1",client.onesend)
-
+    client.initCommClient("localhost",55353,client.onesend)
