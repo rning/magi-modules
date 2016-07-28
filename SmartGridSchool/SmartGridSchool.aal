@@ -2,13 +2,14 @@
 # - start server, start client
 # - Loop every minute:
 #   - start iteration (do gen and consump calculations)
+#   - 
 #   - write to database
 # - Loop every 5 minutes
-#   - client message to server of current and predicted gen and consump  
-#   - server determines necessary energy transfers from surpluses to deficits
-#   - server message to clients of 
-#
-#
+#   - client message to server of next five minute's predicted gen and consump
+#   - server determines next five minute's predetermined necessary energy transfers from surpluses to deficits
+#   - server message to clients of ^ energy transfers
+#   - 
+# - end client, end server
 
 groups:
     server_group: [ server ]
