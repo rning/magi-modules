@@ -4,6 +4,7 @@ import logging
 import math
 #import scipy.io
 import sys
+from random import randint
 
 from magi.messaging.magimessage import MAGIMessage
 from magi.util import helpers, database
