@@ -15,6 +15,7 @@ import yaml
 from CommClient import ClientCommService
 
 log = logging.getLogger(__name__)
+log.setLevel(logging.DEBUG) 
 
 def sind(x):
     return sin((math.pi / 180) * x)
@@ -28,6 +29,7 @@ class Building(DispatchAgent): # difference between DispatchAgent and NonBlockin
         
         #Default arguments for server and clientId:
         self.server = 'server'
+        self.port = 55343
         self.clientId = None
     
     # This code for parsing parameters.conf
@@ -36,11 +38,11 @@ class Building(DispatchAgent): # difference between DispatchAgent and NonBlockin
         
         '''From simple_client > client.py'''
         from magi.testbed import testbed
-        if self.clientId == None:
-            self.hostname = testbed.nodename # should be b-0 to b-21
+        if self.clientId == None: 
+            self.hostname = testbed.nodename
             log.info("Hostname: %s", self.hostname)
-            self.clientId = self.hostname
-        
+            self.clientId = self.hostname 
+
         # The clientId can be set programmatically to append the hostname .
         self.setClientid() 
         self.commClient = None
@@ -271,7 +273,7 @@ class Building(DispatchAgent): # difference between DispatchAgent and NonBlockin
     @agentmethod()
     def startclient(self, msg):
         self.commClient = ClientCommService(self.clientId)
-        self.commClient.initCommClient(self.server, self.requestHandler)
+        self.commClient.initCommClient(self.server, self.port, self.requestHandler)
     
     # From simple_client > client.py
     @agentmethod()
@@ -284,15 +286,18 @@ class Building(DispatchAgent): # difference between DispatchAgent and NonBlockin
     def requestHandler(self, msgData):
         log.info("RequestHandler: %s", msgData)
         
-        dst = msgData['dst']
-        if dst != self.hostname:
-            log.error("Message sent to incorrect destination.")
-            return
-        
         src= msgData['src']
-        string = msgData['string']
-        
-        log.info("src and string: %s %s", src, string)
+        string = msgData['text']
+
+        log.info("src and string: %s %s", src, string) 
+        return "Hello there" 
+
+    # From simple_client > client.py
+    def setClientid(self):
+    # The method is called in the setConfiguration to set a unique clientID  for the client in a group 
+    # If there is only one client per host, then the clientId can be the hostname 
+    # but if there are more than one clients per host, we will need to add a random int to it... 
+        return 
 
 # getAgent() method must be defined somewhere for all agents.
 # Magi daemon invokes method to get reference to agent. Uses reference to run and interact with agent instance.
