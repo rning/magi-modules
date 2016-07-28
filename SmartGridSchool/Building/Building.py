@@ -17,10 +17,10 @@ log = logging.getLogger(__name__)
 log.setLevel(logging.DEBUG) 
 
 def sind(x):
-    return sin((math.pi / 180) * x)
+    return math.sin((math.pi / 180) * x)
 
 def cosd(x):
-    return cos((math.pi / 180) * x)
+    return math.cos((math.pi / 180) * x)
 
 class Building(DispatchAgent): # difference between DispatchAgent and NonBlockingDispatchAgent?
     def __init__(self):
