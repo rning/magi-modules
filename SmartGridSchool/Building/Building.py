@@ -134,8 +134,8 @@ class Building(DispatchAgent): # difference between DispatchAgent and NonBlockin
 
         # A/C calculation
         # max and min temperatures for the day
-        self.maxT = (5.0 / 9.0) * (6.5 * sin(.0172 * self.day - 2.25) + 72.8 - 32)
-        self.minT = (5.0 / 9.0) * (6.5 * sin(.0172 * self.day - 2.25) + 56.5 - 32)
+        self.maxT = (5.0 / 9.0) * (6.5 * math.sin(.0172 * self.day - 2.25) + 72.8 - 32)
+        self.minT = (5.0 / 9.0) * (6.5 * math.sin(.0172 * self.day - 2.25) + 56.5 - 32)
 
         self.ran = self.maxT - self.minT
         self.ave = (self.maxT + self.minT) / 2
@@ -167,8 +167,8 @@ class Building(DispatchAgent): # difference between DispatchAgent and NonBlockin
         self.LST = (self.LT + (4.0 * (-13.361) + self.EoT)) / 60
         self.HRA = 15.0 * (self.LST - 12)
 
-        self.SELA = asin(sind(self.delta) * sind(self.LAT) + cosd(self.delta) * cosd(self.LAT) * cosd(self.HRA))
-        self.SAZA = acos(sind(self.delta) * cosd(self.LAT) - cosd(self.delta) * sind(self.LAT) * cosd(self.HRA)) / cos(self.SELA)
+        self.SELA = math.asin(sind(self.delta) * sind(self.LAT) + cosd(self.delta) * cosd(self.LAT) * cosd(self.HRA))
+        self.SAZA = math.acos(sind(self.delta) * cosd(self.LAT) - cosd(self.delta) * sind(self.LAT) * cosd(self.HRA)) / math.cos(self.SELA)
 
         if self.preDawn and self.SELA > 0: self.preDawn = False
         if not self.preDawn and self.SELA < 0: self.dusk = True
@@ -181,7 +181,7 @@ class Building(DispatchAgent): # difference between DispatchAgent and NonBlockin
             self.diffuseIrradience = 0.2 * pow(0.7, pow(1 / self.am, 0.678))
             self.solarIrradience = 1.353 * (1 + self.diffuseIrradience) * pow(0.7, pow(self.am, 0.678))
 
-            self.moduleCe = cos(self.SELA) * sind(self.ELA) * cosd(self.AZA - self.SAZA * (180 / math.pi)) + sin(self.SELA) * cosd(self.ELA)
+            self.moduleCe = math.cos(self.SELA) * sind(self.ELA) * cosd(self.AZA - self.SAZA * (180 / math.pi)) + math.sin(self.SELA) * cosd(self.ELA)
 
             if self.moduleCe < 0:
                 self.moduleCe = 0
@@ -199,9 +199,9 @@ class Building(DispatchAgent): # difference between DispatchAgent and NonBlockin
 
         self.cons = 0
         # temperature calculation
-        tempEq1 = 2.0 * pow(sin(math.pi * (self.LT / 60.0 - 9) / 12), 3)
-        tempEq2 = 7.0 * pow(sin(math.pi * (self.LT / 60.0 - 9) / 19), 2)
-        tempEq3 = 4.5 * pow(sin(math.pi * (self.LT / 60.0 - 19) / 40), 19)
+        tempEq1 = 2.0 * pow(math.sin(math.pi * (self.LT / 60.0 - 9) / 12), 3)
+        tempEq2 = 7.0 * pow(math.sin(math.pi * (self.LT / 60.0 - 9) / 19), 2)
+        tempEq3 = 4.5 * pow(math.sin(math.pi * (self.LT / 60.0 - 19) / 40), 19)
 
         temp = (1.0 / 7.8789) * (tempEq1 + tempEq2 + tempEq3)
 
