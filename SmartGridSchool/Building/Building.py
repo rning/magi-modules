@@ -186,7 +186,8 @@ class Building(DispatchAgent): # difference between DispatchAgent and NonBlockin
             self.diffuseIrradience = 0.2 * pow(0.7, pow(1 / self.am, 0.678))
             self.solarIrradience = 1.353 * (1 + self.diffuseIrradience) * pow(0.7, pow(self.am, 0.678))
 
-            self.moduleCe = math.cos(self.SELA) * sind(self.ELA) * cosd(self.AZA - self.SAZA * (180 / math.pi)) + math.sin(self.SELA) * cosd(self.ELA)
+            ### MADE CHANGE cosd(self.ELA) to cosd(self.pELA)
+            self.moduleCe = math.cos(self.SELA) * sind(self.pELA) * cosd(self.AZA - self.SAZA * (180 / math.pi)) + math.sin(self.SELA) * cosd(self.pELA)
 
             if self.moduleCe < 0:
                 self.moduleCe = 0
