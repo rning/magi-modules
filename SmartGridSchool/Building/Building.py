@@ -74,7 +74,7 @@ class Building(DispatchAgent): # difference between DispatchAgent and NonBlockin
             self.thermalLeakCe = self.paramList[index+13][len("thermalLeak:"):]
             self.thermalPower = self.paramList[index+14][len("thermalPower:"):]
     
-    def iterateDay(self, msg):
+    def iterateDay(self):
         # run newDay to generate day-unique values
         self.newDay(self.day)
         
@@ -83,7 +83,7 @@ class Building(DispatchAgent): # difference between DispatchAgent and NonBlockin
             for i in range(0, 1440):
                 print >>dataFile, "%d,%d" % (self.generation(), self.consumption())
     
-    def newDay(self, msg, day):
+    def newDay(self, day):
         # constants and parsed values
         self.day = day
         self.LT = 0
@@ -147,7 +147,7 @@ class Building(DispatchAgent): # difference between DispatchAgent and NonBlockin
         
         return true
 
-    def generation(self, msg):
+    def generation(self):
         
         self.LST = (self.LT + (4.0 * (-13.361) + self.EoT)) / 60
         self.HRA = 15.0 * (self.LST - 12)
@@ -180,7 +180,7 @@ class Building(DispatchAgent): # difference between DispatchAgent and NonBlockin
 
         return self.gen
 
-    def consumption(self, msg):
+    def consumption(self):
 
         self.cons = 0
         # temperature calculation
