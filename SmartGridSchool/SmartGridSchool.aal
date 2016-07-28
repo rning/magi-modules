@@ -44,7 +44,14 @@ eventstreams:
             triggers: [ {event: configDone} ]
 
         
-        #event: iterateDay (run once to loop through all iterations and record data in file
+        -   type: event
+            agent: building_agent
+            method: iterateDay
+            args: {}
+            trigger iterateDayDone
+        
+        -   type: trigger
+            triggers: [ {event: iterateDayDone} ]
         
         -   type: event
             agent: building_agent
