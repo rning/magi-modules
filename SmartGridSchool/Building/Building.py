@@ -52,8 +52,8 @@ class Building(DispatchAgent): # difference between DispatchAgent and NonBlockin
             self.paramList = paramFile.read().splitlines()
         
         # define the global parameters
-        self.day = self.paramList[0][len("day:"):]
-        self.panelEff = self.paramList[1][len("panelEff:"):]
+        self.day = float(self.paramList[0][len("day:"):])
+        self.panelEff = float(self.paramList[1][len("panelEff:"):])
         
         # define the parameters unique to the building
         # UNTIL SERVER PARAMS ARE IMPLEMENTED:
