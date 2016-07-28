@@ -65,7 +65,7 @@ eventstreams:
             trigger: clientStarted
         
         -   type: trigger
-            triggers: [ {timeout: 15000} ]
+            triggers: [ {event: clientStarted, count: 21} ]
         
         -   type: event
             agent: building_agent
