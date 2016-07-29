@@ -1,15 +1,16 @@
-import os
+#import os
 
 class ProcessData():
   if __name__ == "__main__":
-    __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+    #__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
     
     netElectricity = []
     for i in range(0, 1440):
       netElectricity.append(0)
     
     for i in range(0, 21):
-      with open(__location__, "b-" + str(i) + "data.txt", "r") as dataFile:
+      fileName = "b-" + str(i) + "data.txt"
+      with open(fileName, "r") as dataFile:
         listIndex = 0
         for line in dataFile:
           generation = float(line[:line.find(",")])
