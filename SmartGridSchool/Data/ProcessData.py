@@ -18,6 +18,6 @@ class ProcessData():
           
           listIndex += 1
     
-    with open(__location__, "netData.txt", "a") as netDataFile:
+    with open("netData.txt", "a") as netDataFile:
       for netData in netElectricity:
         print >>netDataFile, str(netData)
